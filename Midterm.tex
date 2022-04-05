@@ -6,6 +6,14 @@
 \usepackage{amsmath}
 \usepackage{multirow}
 \usepackage[section]{placeins}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=black
+}
 %opening
 \title{EML6934 Midterm Exam}
 \author{Elias Reyes}
@@ -80,14 +88,20 @@ The equations of motion are first derived using Newton's Second Law for a Partic
 \begin{align}
 	\sum{F_{P}} = m_{P} * a_{P}. \label{newton}
 \end{align}
-
+\vspace{2mm}\newline
 Figure \ref{fig:FBD} represents the free body diagram of the particle system. \(F_{G}\), represented by equation \ref{grav_force}, is the gravitational force and acts along the \(u_{r}\) direction. \(F_{T}\), represented by equation \ref{thrust_force}, is the thrust force and acts in the direction \(w\). It can be seen in Figure \ref{fig:beta} that the thrust force can be re-written as 
-c
-We can now take equation \ref{newton} and substitute equation \ref{grav_force}, equation \ref{thrust_force} and equation \ref{acceleration}, to formulate
+\begin{align}
+	F_{T} = Tsin(\beta)u_{r} + Tcos(\beta)u_{\theta}, \label{F_T}
+\end{align}
+while the gravitational force can be written as
+\begin{align}
+	F_{G} = -m\mu\frac{1}{r^2}u_{r}. \label{F_G}
+\end{align}
+We can now substitute equations \ref{acceleration},  \ref{F_T}, and \ref{F_G} into equation \ref{newton} to formulate
 \begin{align*}
-	 -m\mu\frac{1}{r^2}u_{r} + Tsin(\beta)u_{r} + Tcos(\beta)u_{\theta} = m[(\ddot{r} -\ \dot{\theta}^2r)u_{r} +\ (\ddot{\theta}r+2\dot{\theta}\dot{r})u_{\theta}] 
+	 -m\mu\frac{1}{r^2}u_{r} + Tsin(\beta)u_{r} + Tcos(\beta)u_{\theta} = m[(\ddot{r} -\ \dot{\theta}^2r)u_{r} +\ (\ddot{\theta}r+2\dot{\theta}\dot{r})u_{\theta}]. 
 \end{align*}
-After equating terms, the two equations of motion become
+After equating terms, the two equations of motion using Newtons Seconds become
 \begin{align}
 	(u_{r})\qquad      &  \ddot{r}      = \dot{\theta}^2r - \frac{\mu}{r^2} + \frac{Tsin(\beta)}{m} \label{eom1}\\
 	(u_{\theta})\qquad &  \ddot{\theta} = -\frac{2\dot{r}\dot{\theta}}{r}   + \frac{Tcos(\beta)}{mr} \label{eom2}
@@ -454,7 +468,7 @@ tf = 3.25, mf = 0.755, 19 iterations, 16 intervals, Elapsed time is 12.280387 se
 Interestingly, all of the Indirect Multiple Shooting cases achieved the same optimized terminal conditions as the Indirect Shooting Method. This is most likely due to the fact that the errors at the interval points are minuscule and that the optimal control can be directly computed from the Hamiltonian. For each case, regardless of the number of intervals, the optimal control seems to be continuous. The main different between all the cases is that the computation time increases as you include more intervals. For this particular problem, Indirect Multiple Shooting does not show benefit over Indirect Shooting due to the terminal conditions being the same and higher computation costs.
 \subsection{Direct Shooting}
 The third numerical method used is Direct Shooting. This method is much different than the indirect methods in the sense that calculus of variations in not employed. Instead, when solving the differential equations, the control is parameterized by linear independent basis functions. For this study, the basis functions are polynomials with degree \(N\) ranging from 2 to 6. To get an optimized solution, the coefficients of the polynomials must be included in the optimization process. Also, as stated before, Direct Shooting was done on a \(\tau\) scale, rather than on a time scale. This is to be consistent with the next method, Direct Multiple Shooting.
- 
+\vspace{2mm}\newline 
 The first Direct Shooting case is with the control being parameterized by a polynomial of degree \(N = 2\). Figure \ref{fig:directStatesPoly2} shows the states for the trajectory that minimizes the fuel consumption, while Figure \ref{fig:directControlPoly2} shows the optimal control to achieve this trajectory. Right away it is obvious that the results are much different from the previous Indirect Methods. This is because the control is approximated as a polynomial and it's obvious that from the Indirect Methods that the optimal control cant be well approximated with a single polynomial. For this case, single polynomial of degree \(N = 2\), the optimized terminal time and mass were found to be 3.866 and 0.708, respectively. The solution converged after 13 iterations and an elapsed time of 0.324692 seconds.
 \begin{figure}
 	\centering
@@ -535,8 +549,7 @@ The Direct Shooting numerical method produced much different results than that o
 
 \subsection{Direct Multiple Shooting}
 The final numerical method used to solve the optimal control problem is Direct Multiple Shooting. Direct Multiple Shooting similar to Direct Shooting but utilized \(K\) intervals like Indirect Multiple Shooting. Direct Multiple Shooting allows for different sets of polynomial coefficients for each interval. For this study, Direct Multiple Shooting was performed for intervals \(K = (2,4,8,16)\) and with the control parameterized with polynomial of degree \(N = (2,3,4,5,6)\).
-\\
-\\
+\vspace{2mm}\newline 
 The first set of Direct Multiple Shooting cases are performed with the degree polynomial \(N = 2\) and intervals \(K = (2,4,8,16)\). Figure \ref{fig:directStatesK2Poly2} shows the states for the trajectory that minimizes the fuel consumption for \(K = 2\) and  \(N = 2\), while Figure \ref{fig:directControlK2Poly2} shows the optimal control to achieve this trajectory. It is instantly noticeable that the optimal control is much closer to that of the indirect methods than any of the Direct Shooting cases. This is because having two intervals allows for the control to be parameterized with two different polynomials rather than one. For this case, the terminal time and mass were found to be 3.2489 and 0.755, respectively. The solution converged after 33 iterations and an elapsed time of 0.937331 seconds.
 \begin{figure}
 	\centering
@@ -583,7 +596,7 @@ Figure \ref{fig:directStatesK8Poly2} shows the states for the trajectory that mi
 \end{figure}
 \FloatBarrier
 
-Figure \ref{fig:directStatesK16Poly2} shows the states for the trajectory that minimizes the fuel consumption for \(K = 8\) and  \(N = 2\), while Figure \ref{fig:directControlK16Poly2} shows the optimal control to achieve this trajectory. The terminal time and mass were optimized to be 3.248 and 0.755, respectively. The solution converged after iterations and an elapsed time of 80.721927 seconds. Interestingly about this case, a solution was originally computed with lower coefficient bounds which prevented the terminal conditions from being as optimal as previous cases. Once the bounds were opened, similar optimized terminal conditions were achieved.
+Figure \ref{fig:directStatesK16Poly2} shows the states for the trajectory that minimizes the fuel consumption for \(K = 16\) and  \(N = 2\), while Figure \ref{fig:directControlK16Poly2} shows the optimal control to achieve this trajectory. The terminal time and mass were optimized to be 3.248 and 0.755, respectively. The solution converged after 112 iterations and an elapsed time of 80.721927 seconds. Interestingly about this case, a solution was originally computed with lower coefficient bounds which prevented the terminal conditions from being as optimal as previous cases. Once the bounds were opened, similar optimized terminal conditions were achieved.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{directStatesK16Poly2.eps}
@@ -598,7 +611,7 @@ Figure \ref{fig:directStatesK16Poly2} shows the states for the trajectory that m
 \end{figure}
 \FloatBarrier
 
-The next set of Direct Multiple Shooting cases are performed with the degree polynomial \(N = 3\) and intervals \(K = (2,4,8,16)\). Figure \ref{fig:directStatesK2Poly3} shows the states for the trajectory that minimizes the fuel consumption for \(K = 2\) and  \(N = 3\), while Figure \ref{fig:directControlK2Poly3} shows the optimal control to achieve this trajectory. The results for this case are similar to the previous Direct Multiple Shooting results. The terminal time was optimized to be 3.248 while the terminal mass was optimized to be 0.755. The solution for this case converged after 46 intervals and an elapsed time of 1.24360 seconds.
+The next set of Direct Multiple Shooting cases are performed with the degree polynomial \(N = 3\) and intervals \(K = (2,4,8,16)\). Figure \ref{fig:directStatesK2Poly3} shows the states for the trajectory that minimizes the fuel consumption for \(K = 2\) and  \(N = 3\), while Figure \ref{fig:directControlK2Poly3} shows the optimal control to achieve this trajectory. The results for this case are similar to the previous Direct Multiple Shooting results. The terminal time was optimized to be 3.248 while the terminal mass was optimized to be 0.755. The solution for this case converged after 46 iterations and an elapsed time of 1.24360 seconds.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{directStatesK2Poly3.eps}
@@ -657,7 +670,6 @@ The last case where the control is parameterized by a \(3^{rd}\) degree polynomi
 	\label{fig:directControlK16Poly3}
 \end{figure}
 \FloatBarrier
-
 
 The third set of Direct Multiple Shooting cases are performed with the control parameterized by a \(4^{th}\) degree polynomial for intervals \(K = (2,4,8,16)\). Figure \ref{fig:directStatesK2Poly4} shows the states for the trajectory that minimizes the fuel consumption for \(K = 2\) and  \(N = 4\), while Figure \ref{fig:directControlK2Poly4} shows the optimal control to achieve this trajectory. The optimal control looks similar to that of the other direct multiple shooting two-interval cases. The optimized terminal time and mass are 3.248 and 0.7553, respectively. The optimal solution converged after 41 iterations and an elapsed time of 1.313428 seconds. Comparing with the other direct multiple shooting two-interval interval cases, it seems that the computation cost increases as the polynomial degree gets larger. This makes sense because an extra degree requires extra optimization.
 \begin{figure}
@@ -718,7 +730,6 @@ Figure \ref{fig:directStatesK16Poly4} shows the states for the trajectory that m
 	\label{fig:directControlK16Poly4}
 \end{figure}
 \FloatBarrier
-
 
 The next set of Direct Multiple Shooting cases are the control parameterized by a \(5^{th}\) degree polynomial for intervals \(K = (2,4,8,16)\). Figure \ref{fig:directStatesK2Poly5} shows the states for the trajectory that minimizes the fuel consumption for \(K = 2\) and  \(N = 5\), while Figure \ref{fig:directControlK2Poly5} shows the optimal control to achieve this trajectory. The optimized terminal time and mass are 3.2485 and 0.7553, respectively. The optimal solution converged after 37 iterations and an elapsed time of 1.345495 seconds. Regardless of the polynomial degree, the optimized control seems to look very similar for each interval.
 \begin{figure}
@@ -810,7 +821,7 @@ Figure \ref{fig:directStatesK4Poly6} shows the states for the trajectory that mi
 \end{figure}
 \FloatBarrier
 
-Figure \ref{fig:directStatesK8Poly6} shows the states for the trajectory that minimizes the fuel consumption for \(K = 8\) and  \(N = 6\), while Figure \ref{fig:directControlK8Poly6} shows the optimal control to achieve this trajectory. The optimized terminal time and mass are 3.248 and 0.7554, respectively. The optimal solution converged after 107 iterations and an elapsed time of 31.923118 seconds.
+Figure \ref{fig:directStatesK8Poly6} shows the states for the trajectory that minimizes the fuel consumption for \(K = 8\) and  \(N = 6\), while Figure \ref{fig:directControlK8Poly6} shows the optimal control to achieve this trajectory. The optimized terminal time and mass are 3.248 and 0.7554, respectively. The optimal solution converged after 107 iterations and an elapsed time of 31.923118 seconds. 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{directStatesK8Poly6.eps}
@@ -841,5 +852,58 @@ The last case where the control is parameterized by a \(6^{th}\) degree polynomi
 \FloatBarrier
 
 \subsubsection{Analysis of Direct Multiple Shooting}
+The Direct Multiple Shooting numerical method produced much better results than Direct Shooting. While Direct Shooting had trouble optimizing the control, Direct Multiple Shooting was able to optimize the control almost as good as the indirect methods. The difference between the two direct methods is that Direct Multiple Shooting allows for the use of multiple rather than single polynomials. When looking at the results using Direct Multiple Shooting, it is noticeable that the degree of the polynomial does not really make a difference in coming up with an optimal solution (since the terminal time and mass are the same in all cases). The main difference is that increasing the polynomial degree also increases the computational cost. For example, the solution for the case of 2 intervals with polynomial degree 2 converged after 33 iterations and 0.937 seconds while the solution for the case of 2 intervals with polynomial degree 6 converged after 48 iterations and 1.72 seconds. This is approximately a 59\% difference. While this percentage may seem high, the magnitude of the difference for this example is low, which is not the case for the 16-interval solutions. For the case of 16 intervals with polynomial degree 2 converged 80 seconds while the solution for the case of 16 intervals with polynomial degree 6 converged in 184 seconds. This is a 104 second difference which is about 79\%. This is significant and shows that for this particular problem, the \(2^{nd}\) degree polynomial control is more optimal than the \(6^{th}\) degree polynomial control. 
+
+ \begin{tabular}{ |p{3cm}||p{3cm}|  }
+	\hline
+	\multicolumn{2}{|c|}{Simulation Parameters} \\
+	\hline
+	$\alpha_a$ & 0.2\\
+	\hline
+	$\alpha_{fe}$ & 0.1\\
+	\hline
+	$m$ & 72\\
+	\hline
+	$n$ & 256\\
+	\hline
+	Samples& 100 \\
+	\hline
+	$S_\mathrm{max}$ & 10 \\
+	\hline
+	time & 0:0.01:10 \\
+	\hline
+	switch times & $[3,8]$ \\
+	\hline
+	$\Delta_t$ & $[1,2]$ \\
+	\hline
+	$\sigma_\mathrm{init}=$ &  9\\
+	\hline
+	$\sigma_\mathrm{sys}=$ & 1\\
+	\hline
+	$\sigma_\mathrm{obs}=$ & $\frac{S_\mathrm{max}}{9n}$\\
+	\hline
+	$\hat{x}_0$ & 0 \\
+	\hline
+	$P_0$ & 0 \\
+	\hline
+\end{tabular}
+\begin{center}
+	\begin{tabular}{||c c c c c c||} 
+		\hline
+		Degree-N & Intervals-K & Iterations (s) & Sim Time & Terminal Time & Terminal Mass\\ [0.5ex] 
+		\hline\hline
+		2        & 2           & 33             & 0.7972   & 3.2488794     & 0.75535473\\ 
+		\hline
+		2        & 4           & 59             & 3.0869   & 3.2478550     & 0.75543187\\
+		\hline
+		2        & 8           & 75             & 13.8941  & 3.2478042     & 0.75543560\\
+		\hline
+		2        & 16          & 112            & 79.1192  & 3.2477120     & 0.75544264\\ [1ex] 
+%		\hline
+%		5 & 88 & 788 & 6344 \\ [1ex] 
+		\hline
+	\end{tabular}
+\end{center}
+ 
 \subsection{Overall Analysis}
 \end{document}

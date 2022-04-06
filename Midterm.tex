@@ -399,11 +399,24 @@ The first numerical method used to solve the optimal control problem is indirect
 	\label{fig:indirectControl}
 \end{figure}
 \FloatBarrier
+\begin{table}
+	\centering
+	\begin{tabular}{||c c c c||} 
+		\hline
+		Iterations (s) & Sim Time & Terminal Time & Terminal Mass\\ [0.5ex] 
+		\hline\hline
+		27            & 0.321     &   3.247       & 0.755\\ [1ex]
+		\hline
+	\end{tabular}
+\caption{Performance for Indirect Shooting}
+\label{table:1}
+\end{table}
+\FloatBarrier
 \subsubsection{Analysis of Indirect Shooting}
 For this problem, the optimized terminal conditions were easily solvable using Indirect Shooting. The computation time was fast and the results were accurate. The only drawback to this methods is variational calculus must be used which is not always feasible and may, in some cases, increase computation. Also, for some problems, a single shoot might push the limits of CPU due to large time steps. 
 \subsection{Indirect Multiple Shooting}
 The second method used is Indirect Multiple Shooting, This method is much like Indirect Shooting but unlike integrating over a single time interval, multiple shooting allows you to break the single interval up into smaller sub-intervals. This is generally done to reduce the magnitude of numbers worked with during optimization. For Indirect Multiple Shooting, the intervals tested are: K = (2, 4, 8, 16).
-
+\vspace{2mm}\newline
 Figure \ref{fig:indirectMultiStates} shows the states for the trajectory that minimizes the fuel consumption for intervals \(K = 2\). Figure \ref{fig:indirectMultiControl} shows the optimal control to achieve the optimal trajectory for interval K = 2. The black asterisks in figures represent the start and end points of an interval. Much like Indirect Shooting, the optimized final time was found to be 3.247 while the terminal mass was 0.755. The solver converged after 16 iterations and an elapsed time of 0.4746 seconds.
 \begin{figure}[hbt!]
 	\centering
@@ -463,6 +476,25 @@ tf = 3.25, mf = 0.755, 19 iterations, 16 intervals, Elapsed time is 12.280387 se
 	\caption{Optimal Control that minimizes fuel consumption (16 intervals)}
 	\label{fig:indirectMultiControl16}
 \end{figure}
+\FloatBarrier
+\begin{table}
+    \centering
+	\begin{tabular}{||c c c c c||} 
+		\hline
+		Intervals-K & Iterations (s) & Sim Time & Terminal Time & Terminal Mass\\ [0.5ex] 
+		\hline\hline
+		2           & 16            & 0.5110     &   3.24694      & 0.7555\\
+		\hline
+		4           & 19            & 0.9880     &   3.24694      & 0.7555\\ 
+		\hline
+		8           & 16            & 2.6119     &   3.24694      & 0.7555\\ 
+		\hline
+		16          & 19            & 10.9391    &  3.246944      & 0.7555\\ [1ex]
+		\hline
+	\end{tabular}
+\caption{Performance for Indirect Multiple Shooting}
+\label{table:2}
+\end{table}
 \FloatBarrier
 \subsubsection{Analysis of Indirect Multiple Shooting}
 Interestingly, all of the Indirect Multiple Shooting cases achieved the same optimized terminal conditions as the Indirect Shooting Method. This is most likely due to the fact that the errors at the interval points are minuscule and that the optimal control can be directly computed from the Hamiltonian. For each case, regardless of the number of intervals, the optimal control seems to be continuous. The main different between all the cases is that the computation time increases as you include more intervals. For this particular problem, Indirect Multiple Shooting does not show benefit over Indirect Shooting due to the terminal conditions being the same and higher computation costs.
@@ -543,7 +575,27 @@ The final Direct Shooting case is with the control being parameterized by a poly
 	\label{fig:directControlPoly6}
 \end{figure}
 \FloatBarrier
-
+\begin{table}
+	\centering
+	\begin{tabular}{||c c c c c||} 
+		\hline
+		Degree-N & Iterations (s) & Sim Time & Terminal Time & Terminal Mass\\ [0.5ex] 
+		\hline\hline
+		2           & 13            & 0.3289     &  3.8662     & 0.7555\\
+		\hline
+		3           & 23            & 0.2474     &  3.5109     & 0.7089\\ 
+		\hline
+		4           & 26            & 0.3590     &  3.4723     & 0.7356\\ 
+		\hline
+		5           & 41            & 0.4678     &  3.3641     & 0.7467\\ 
+		\hline
+		6           & 51            & 0.6769     &  3.3611     & 0.7469\\ [1ex]
+		\hline
+	\end{tabular}
+	\caption{Performance for Direct Shooting}
+	\label{table:3}
+\end{table}
+\FloatBarrier
 \subsubsection{Analysis of Direct Shooting}
 The Direct Shooting numerical method produced much different results than that of the two indirect methods. It is evident that the control being parameterized as a single polynomial basis function does not produce as optimized results as employing the calculus of variations. However, there are some highlights to the Direct Shooting method which are that it is much simpler to employ. Also, for single Direct Shooting case, the computation time is very efficient. The case with polynomial degree \(N = 6\) was the most computationally heavy and only took 1.017488 to converge on a solution. While Indirect Shooting only took 0.321 seconds, Indirect Multiple Shooting ranged from 0.4746 to 12.28 seconds. Out of these methods the preferred method really comes down to the requirements. The largest terminal mass for the Direct Shooting method was 0.747 when the control is parameterized with a polynomial of degree \(N = 6\). Depending on the scale, this could be a massive difference from the optimized terminal mass using the indirect methods. This results in an approximately 1\% difference in mass.
 
@@ -850,60 +902,77 @@ The last case where the control is parameterized by a \(6^{th}\) degree polynomi
 	\label{fig:directControlK16Poly6}
 \end{figure}
 \FloatBarrier
-
-\subsubsection{Analysis of Direct Multiple Shooting}
-The Direct Multiple Shooting numerical method produced much better results than Direct Shooting. While Direct Shooting had trouble optimizing the control, Direct Multiple Shooting was able to optimize the control almost as good as the indirect methods. The difference between the two direct methods is that Direct Multiple Shooting allows for the use of multiple rather than single polynomials. When looking at the results using Direct Multiple Shooting, it is noticeable that the degree of the polynomial does not really make a difference in coming up with an optimal solution (since the terminal time and mass are the same in all cases). The main difference is that increasing the polynomial degree also increases the computational cost. For example, the solution for the case of 2 intervals with polynomial degree 2 converged after 33 iterations and 0.937 seconds while the solution for the case of 2 intervals with polynomial degree 6 converged after 48 iterations and 1.72 seconds. This is approximately a 59\% difference. While this percentage may seem high, the magnitude of the difference for this example is low, which is not the case for the 16-interval solutions. For the case of 16 intervals with polynomial degree 2 converged 80 seconds while the solution for the case of 16 intervals with polynomial degree 6 converged in 184 seconds. This is a 104 second difference which is about 79\%. This is significant and shows that for this particular problem, the \(2^{nd}\) degree polynomial control is more optimal than the \(6^{th}\) degree polynomial control. 
-
- \begin{tabular}{ |p{3cm}||p{3cm}|  }
-	\hline
-	\multicolumn{2}{|c|}{Simulation Parameters} \\
-	\hline
-	$\alpha_a$ & 0.2\\
-	\hline
-	$\alpha_{fe}$ & 0.1\\
-	\hline
-	$m$ & 72\\
-	\hline
-	$n$ & 256\\
-	\hline
-	Samples& 100 \\
-	\hline
-	$S_\mathrm{max}$ & 10 \\
-	\hline
-	time & 0:0.01:10 \\
-	\hline
-	switch times & $[3,8]$ \\
-	\hline
-	$\Delta_t$ & $[1,2]$ \\
-	\hline
-	$\sigma_\mathrm{init}=$ &  9\\
-	\hline
-	$\sigma_\mathrm{sys}=$ & 1\\
-	\hline
-	$\sigma_\mathrm{obs}=$ & $\frac{S_\mathrm{max}}{9n}$\\
-	\hline
-	$\hat{x}_0$ & 0 \\
-	\hline
-	$P_0$ & 0 \\
-	\hline
-\end{tabular}
-\begin{center}
+\begin{table}
+	\centering
 	\begin{tabular}{||c c c c c c||} 
 		\hline
 		Degree-N & Intervals-K & Iterations (s) & Sim Time & Terminal Time & Terminal Mass\\ [0.5ex] 
 		\hline\hline
-		2        & 2           & 33             & 0.7972   & 3.2488794     & 0.75535473\\ 
+		2        & 2           & 33             & 0.7972   & 3.2489     & 0.7554\\ 
 		\hline
-		2        & 4           & 59             & 3.0869   & 3.2478550     & 0.75543187\\
+		2        & 4           & 59             & 3.0869   & 3.2479     & 0.7554\\
 		\hline
-		2        & 8           & 75             & 13.8941  & 3.2478042     & 0.75543560\\
+		2        & 8           & 75             & 13.8941  & 3.2478     & 0.7554\\
 		\hline
-		2        & 16          & 112            & 79.1192  & 3.2477120     & 0.75544264\\ [1ex] 
-%		\hline
-%		5 & 88 & 788 & 6344 \\ [1ex] 
+		2        & 16          & 112            & 79.1192  & 3.2477     & 0.7554\\
+		\hline
+		3        & 2           & 45             & 0.8537   & 3.2480     & 0.7554\\
+		\hline
+		3        & 4           & 63             & 3.5958   & 3.2479     & 0.7554\\
+		\hline
+		3        & 8           & 92             & 19.576   & 3.2478     & 0.7554\\
+		\hline
+		3        & 16          & 128            & 101.136  & 3.2477     & 0.7554\\
+		\hline
+		4        & 2           & 38             & 0.7176   & 3.2483     & 0.7554\\
+		\hline
+		4        & 4           & 66             & 4.1511   & 3.2479     & 0.7554\\
+		\hline
+		4        & 8           & 87             & 20.2003  & 3.2479     & 0.7554\\
+		\hline
+		4        & 16          & 142            & 124.693  & 3.2475     & 0.7555\\
+		\hline
+		5        & 2           & 38             & 0.8166   & 3.2485     & 0.7554\\
+		\hline
+		5        & 4           & 65             & 4.7263   & 3.2480     & 0.7554\\
+		\hline
+		5        & 8           & 94             & 24.1589  & 3.2478     & 0.7554\\
+		\hline
+		5        & 16          & 136            & 132.165  & 3.2476     & 0.7555\\
+		\hline
+		6        & 2           & 47             & 1.1136   & 3.2486     & 0.7555\\
+		\hline
+		6        & 4           & 64             & 4.9823   & 3.2480     & 0.7554\\
+		\hline
+		6        & 8           & 117            & 35.1663  & 3.2478     & 0.7554\\
+		\hline
+		6        & 16          & 145            & 153.775  & 3.2476     & 0.7555\\ [1ex]
 		\hline
 	\end{tabular}
-\end{center}
- 
+	\caption{Performance for Direct Multiple Shooting}
+	\label{table:4}
+\end{table}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{directMultiShootPerform.eps}
+	\caption{Statistics for all Direct Multiple Shooting Cases}
+	\label{fig:Direct_Multiple_Shooting_Performance}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{directMultiShootExec.eps}
+	\caption{Execution Times for all Direct Multiple Shoot Cases}
+	\label{fig:directMultiShootExec}
+\end{figure}
+\FloatBarrier
+\subsubsection{Analysis of Direct Multiple Shooting}
+The Direct Multiple Shooting numerical method produced much better results than Direct Shooting. While Direct Shooting had trouble optimizing the control, Direct Multiple Shooting was able to optimize the control almost as good as the indirect methods. The difference between the two direct methods is that Direct Multiple Shooting allows for the use of multiple, rather than single polynomials. When looking at the results in Table \ref{table:4}, it is noticeable that the degree of the polynomial has little impact negligible impact on converging to the optimal solution (since the terminal time and mass are the same in all cases). The main difference is that increasing the polynomial degree also increases the computation cost. For example, the solution for the case of 2 intervals with polynomial degree 2 converged after 33 iterations and 0.7827 seconds while the solution for the case of 2 intervals with polynomial degree 6 converged after 47 iterations and 1.1136 seconds. This is approximately a 42.3\% increase in computation time. While this percentage may seem high, the magnitude of the difference for this example is low. Because of this, for some applications, the extra computation time may not be significant. Meanwhile, the 16-interval amplify the loss in efficiency. For the case of 16 intervals with polynomial degree 2, the solution converged in 79.1 seconds while the solution for the case of 16 intervals with polynomial degree 6 converged in 153.8 seconds. This is approximately a 74 second difference which is about a 94.4\% increase. Figure \ref{fig:directMultiShootExec} shows how the polynomial degree increase has a much greater impact as the number of intervals also increases. Interesting, you can almost fit a quadratic to the change in time as intervals increase. Figure \ref{fig:Direct_Multiple_Shooting_Performance} is another good representation of how the polynomial degree and number of intervals affects the execution time. This phenomena is significant and shows that for this particular problem, the optimal control is more efficiently parameterized by a \(2^{nd}\) degree polynomial rather than a \(6^{th}\) degree polynomial.
+
 \subsection{Overall Analysis}
+For this particular problem, the solution was best achieved using the Indirect Shooting Method. As seen in Table \ref{table:1}, the objective function was minimized, minimize terminal time or fuel burned, in only 0.321 seconds. The final time was found to be 3.247 which is the lowest that any case was able to achieve. The terminal mass was found to be 0.755 which is the most that any case achieved. Indirect Shooting also had a continuous optimal control which is the most realistic, since the control is the angle of the thrust force. Because of this, Indirect Shooting will be used as a baseline for the remaining analysis. The objective function obtained by the Indirect Shooting Method was also well optimized. Each case, intervals \(K = (2,4,8,16)\), was able to achieve the same terminal time and mass as the Indirect Shooting Method. However, if you look at Table \ref{table:2}, you'll realize that the sim-time longer for each case compared to that of Indirect Shooting. This is due to optimization being performed at multiple intervals rather than just at the boundary point. For each additional interval, additional states and co-states errors must be minimized. Since the sim-time is greater and performance is equal for each Indirect Multiple Shooting case, it is more efficient to use Indirect Shooting for this optimal control problem. However, for many other problems, such as the hypersensitive problem, Indirect Multiple Shooting is a much better choice. Multiple Shooting is most effective when integration times are higher and not the objective function being minimized. This is because the solution to many differential equations are exponential functions and when the time grows too large, modern computers cannot handle the precision. Because of this optimization may fail. For example, if the objective function for this problem would have been to follow a trajectory that required a large final time, then Indirect Shooting would most likely of failed. In this case Indirect Multiple Shooting would have been the optimal method since it breaks the time interval into smaller sub-intervals. 
+
+\section{Future Work}
+
+\section{Appendix}
+
 \end{document}

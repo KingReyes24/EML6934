@@ -24,6 +24,7 @@
 	columns=fullflexible,
 	showstringspaces=false
 }
+
 %opening
 \title{EML6934 Midterm Exam}
 \author{Elias Reyes}
@@ -37,8 +38,8 @@
 %\end{abstract}
 
 \section{Differential Equations of Motion}
-The equations of motion were derived using both Newton's second law and Lagrange's equations. The schematic for problem can be seen Figure \ref{fig:schematic}. The spacecraft is modeled as point \(P\) of  mass \(m\). The spacecraft moves relative to an inertial reference frame \(l\). The reference frame fixed in \(l\) is expressed as \(\{e_{x},e_{y},e_{z}\}\). The position of the spacecraft is denoted as \(r_{P/O}\), where \(O\) is modeled as the sun, fixed in \(l\). The spacecraft is parameterized in the basis \(\{u_{r},u_{\theta},u_{z}\}\), where the rotation is about \(u_{z}\) = \(e_{z}\). The rotation creates an angle \(\theta\) between \(e_{x}\) and \(u_{r}\), which can be seen in Figure \ref{fig:rotation2}.
-
+The equations of motion were derived using both Newton's second law and Lagrange's equations. The schematic for the problem can be seen Figure \ref{fig:schematic}. The spacecraft is modeled as point \(P\) of  mass \(m\). The spacecraft moves relative to an inertial reference frame \(l\). The reference frame fixed in \(l\) is expressed as \(\{e_{x},e_{y},e_{z}\}\). The position of the spacecraft is denoted as \(r_{P/O}\), where \(O\) is modeled as the sun, fixed in \(l\). The spacecraft is parameterized in the basis \(\{u_{r},u_{\theta},u_{z}\}\), where the rotation is about \(u_{z}\) = \(e_{z}\). The rotation creates an angle \(\theta\) between \(e_{x}\) and \(u_{r}\), which can be seen in Figure \ref{fig:rotation2}.
+\vspace{2mm}\newline
 \begin{figure}
 	\centering
     \includegraphics[width=85mm,scale=0.85]{midterm_schematic.png}
@@ -51,6 +52,7 @@ The equations of motion were derived using both Newton's second law and Lagrange
 	\caption{Reference frame rotation}
 	\label{fig:rotation2}
 \end{figure}
+\noindent 
 Two forces are said to act on the spacecraft. The first is the gravitational force which is given as
 \begin{equation} \label{grav_force}
 	G = -m\mu\frac{r_{P/O}}{||r_{P/O}||^3},
@@ -69,7 +71,7 @@ where \(w\) is the unit vector that lies an angle \(\beta\) from the direction \
 	\label{fig:beta}
 \end{figure}
 \subsection{Position, Velocity and Acceleration of the Spacecraft}
-As seen in Figure \ref{fig:schematic}, the position of the spacecraft represented in reference frame \(A\) is given as 
+As seen in Figure \ref{fig:schematic}, the position of the spacecraft represented in reference frame \(A\), is given as 
 \begin{equation} \label{position}
 	^A\vec{r}_{P/O} = ru_{r}.
 \end{equation}
@@ -111,7 +113,7 @@ We can now substitute equations \ref{acceleration},  \ref{F_T}, and \ref{F_G} in
 \begin{align*}
 	 -m\mu\frac{1}{r^2}u_{r} + Tsin(\beta)u_{r} + Tcos(\beta)u_{\theta} = m[(\ddot{r} -\ \dot{\theta}^2r)u_{r} +\ (\ddot{\theta}r+2\dot{\theta}\dot{r})u_{\theta}]. 
 \end{align*}
-After equating terms, the two equations of motion using Newtons Seconds become
+After equating terms, the two equations of motion using Newtons Seconds become:
 \begin{align}
 	(u_{r})\qquad      &  \ddot{r}      = \dot{\theta}^2r - \frac{\mu}{r^2} + \frac{Tsin(\beta)}{m} \label{eom1}\\
 	(u_{\theta})\qquad &  \ddot{\theta} = -\frac{2\dot{r}\dot{\theta}}{r}   + \frac{Tcos(\beta)}{mr} \label{eom2}
@@ -147,41 +149,45 @@ Substituting equations \ref{kinetic_energy} and \ref{scalar_potential} into equa
 \begin{align}
 	L = \frac{1}{2}m(\dot{r}^2+\dot{\theta}^2r^2) + \frac{m\mu}{r}. \label{lagrangian2}
 \end{align}
- The generalized coordinates for this system are \(q_1 = r\) and \(q_2 = \theta\). The derivatives in equation \ref{standard_form_lagrange} for each generalized coordinate can then be expressed as
+ The generalized coordinates for this system are \(q_1 = r\) and \(q_2 = \theta\). The derivatives in equation \ref{standard_form_lagrange}, for each generalized coordinate can then be expressed as:
 \begin{align*}
-  \frac{\partial L}{\partial q_{1}} &= m\dot{\theta}^2r - \frac{m\mu}{r}\quad & \frac{\partial L}{\partial \dot{q}_{1}} &= m\dot{r}          & \frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{1}} &= m\ddot{r} \\
-  \frac{\partial L}{\partial q_{2}} &= 0\quad                                 & \frac{\partial L}{\partial \dot{q}_{2}} &= m\dot{\theta}r^2  & \frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{2}} &= m\ddot{\theta}r^2 + 2mr\dot{\theta}\dot{r}
+  \frac{\partial L}{\partial q_{1}} &= m\dot{\theta}^2r - \frac{m\mu}{r},\quad & \frac{\partial L}{\partial \dot{q}_{1}} &= m\dot{r},          & \frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{1}} &= m\ddot{r}, \\
+  \frac{\partial L}{\partial q_{2}} &= 0,\quad                                 & \frac{\partial L}{\partial \dot{q}_{2}} &= m\dot{\theta}r^2,  & \frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{2}} &= m\ddot{\theta}r^2 + 2mr\dot{\theta}\dot{r}.
 \end{align*}
-The generalized forces that are not derivable from a scalar potential function for the generalized coordinate \(r\) are then formulated as
+The generalized forces, that are not derivable from a scalar potential function, for the generalized coordinate \(r\) are then formulated as:
 \begin{align}
-	Q^{'}_{1} &= Tw \cdot  \frac{\partial r_{P/O}}{\partial r} \nonumber\\
-	Q^{'}_{1} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot \frac{\partial ru_{r}}{\partial r} \nonumber\\
-	Q^{'}_{1} &= Tsin(\beta) \label{q1}
+	Q^{'}_{1} &= Tw \cdot  \frac{\partial r_{P/O}}{\partial r}, \nonumber\\
+	Q^{'}_{1} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot \frac{\partial ru_{r}}{\partial r}, \nonumber\\
+	Q^{'}_{1} &= Tsin(\beta) \label{q1}.
 \end{align}
-The generalized forces that are not derivable from a scalar potential function for the generalized coordinate \(\theta\) are then formulated as
+The generalized forces, that are not derivable from a scalar potential function, for the generalized coordinate \(\theta\) are then formulated as:
 \begin{align*}
-	Q^{'}_{2} &= Tw \cdot  \frac{\partial r_{P/O}}{\partial r} \\
+	Q^{'}_{2} &= Tw \cdot  \frac{\partial r_{P/O}}{\partial r}, \\
 	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot \frac{\partial ru_{r}}{\partial \theta},
 \end{align*}
 where \(u_r = cos(\theta)e_{x} + sin(\theta)e_{y}\). Then,
 \begin{align*}
-	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot \frac{\partial (rcos(\theta)e_{x} + rsin(\theta)e_{y})}{\partial \theta} \\
-	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot r(-sin(\theta)e_{x} + cos(\theta)e_{y}) \\
+	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot \frac{\partial (rcos(\theta)e_{x} + rsin(\theta)e_{y})}{\partial \theta}, \\
+	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot r(-sin(\theta)e_{x} + cos(\theta)e_{y}), \\
 \end{align*}
 where \(u_{\theta} = -sin(\theta)e_{x} + cos(\theta)e_{y}\). Then,
 \begin{align}
-	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot ru_{\theta} \nonumber\\
-	Q^{'}_{2} &= Tcos(\beta)r \label{q2}
+	Q^{'}_{2} &= [Tcos(\beta)u_{\theta} + Tsin(\beta)u_{r}] \cdot ru_{\theta}, \nonumber\\
+	Q^{'}_{2} &= Tcos(\beta)r. \label{q2}
 \end{align}
-Then, after substituting equations \ref{q1}, \ref{q2}, and the derivatives, into equation \ref{standard_form_lagrange}, the two equations of motion become
+Then, after substituting equations \ref{q1}, \ref{q2}, and the derivatives, into equation \ref{standard_form_lagrange}, the two equations of motion become:
 \begin{align}
- m\ddot{r} - m\dot{\theta}^2r + \frac{m\mu}{r} &= Tsin(\beta) \nonumber\\
- m\ddot{r}                                     &= m\dot{\theta}^2r - \frac{m\mu}{r} + Tsin(\beta) \nonumber\\
- \ddot{r}                                      &= \dot{\theta}^2r - \frac{\mu}{r^2} + \frac{Tsin(\beta)}{m} \label{eom1_lagrange}\\
- m\ddot{\theta}r^2 + 2mr\dot{\theta}\dot{r}    &= Tcos(\beta)r \nonumber\\
- m\ddot{\theta}r^2                             &= -2mr\dot{\theta}\dot{r} + Tcos(\beta)r \nonumber\\
- \ddot{\theta}                                &= -\frac{2\dot{r}\dot{\theta}}{r}   + \frac{Tcos(\beta)}{mr} \label{eom2_lagrange}
+ m\ddot{r} - m\dot{\theta}^2r + \frac{m\mu}{r} &= Tsin(\beta), \nonumber\\
+ m\ddot{r}                                     &= m\dot{\theta}^2r - \frac{m\mu}{r} + Tsin(\beta), \nonumber\\
+ \ddot{r}                                      &= \dot{\theta}^2r - \frac{\mu}{r^2} + \frac{Tsin(\beta)}{m} \label{eom1_lagrange},
 \end{align}
+and,
+\begin{align}
+ m\ddot{\theta}r^2 + 2mr\dot{\theta}\dot{r}    &= Tcos(\beta)r, \nonumber\\
+ m\ddot{\theta}r^2                             &= -2mr\dot{\theta}\dot{r} + Tcos(\beta)r, \nonumber\\
+ \ddot{\theta}                                &= -\frac{2\dot{r}\dot{\theta}}{r}   + \frac{Tcos(\beta)}{mr} \label{eom2_lagrange}.
+\end{align}
+\vspace{2mm}\newline
 Equations \ref{eom1} and \ref{eom2} represent the equations of motion derived using Newtons Second Law, while equations \ref{eom1_lagrange} and \ref{eom2_lagrange} represent the equations of motion derived using Lagrange's Equations. 
 \subsection{Conversion to First-Order Equations}
 To re-write the two second-order equations into first four first-order equations, the following substitutions can be made:
@@ -473,8 +479,8 @@ Figure \ref{fig:indirectMultiStates8} shows the states for the trajectory that m
 \end{figure}
 %\FloatBarrier
 \vspace{2mm}\newline 
-The final Indirect Multiple Shooting case is with intervals K = 16. Figure \ref{fig:indirectMultiStates16} shows the states for the trajectory that minimizes the fuel consumption for intervals K = 16, while Figure \ref{fig:indirectMultiControl16} shows the optimal control to achieve this optimal trajectory. Just like all the other Indirect results, the terminal time and mass were optimized to be 3.247 and 0.755, respectively. However, for 16 interval the elapsed time increased to 12.280387 seconds. Lastly, the solution converged in 19 iterations.
-tf = 3.25, mf = 0.755, 19 iterations, 16 intervals, Elapsed time is 12.280387 seconds.
+The final Indirect Multiple Shooting case is with intervals K = 16. Figure \ref{fig:indirectMultiStates16} shows the states for the trajectory that minimizes the fuel consumption for intervals K = 16, while Figure \ref{fig:indirectMultiControl16} shows the optimal control to achieve this optimal trajectory. Just like all the other Indirect results, the terminal time and mass were optimized to be 3.247 and 0.755, respectively. However, for 16 interval the elapsed time increased to 10.9391 seconds. Lastly, the solution converged in 19 iterations.
+%tf = 3.25, mf = 0.755, 19 iterations, 16 intervals, Elapsed time is 12.280387 seconds.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{indirectMultiStates16.eps}
@@ -500,7 +506,7 @@ tf = 3.25, mf = 0.755, 19 iterations, 16 intervals, Elapsed time is 12.280387 se
 		\hline
 		8           & 16            & 2.6119     &   3.24694      & 0.7555\\ 
 		\hline
-		16          & 19            & 10.9391    &  3.246944      & 0.7555\\ [1ex]
+		16          & 19            & 10.9391    &   3.246944     & 0.7555\\ [1ex]
 		\hline
 	\end{tabular}
 \caption{Performance for Indirect Multiple Shooting}
